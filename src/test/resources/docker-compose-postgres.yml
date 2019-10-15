@@ -1,0 +1,18 @@
+version: "2.4"
+services:
+  postgres_musiclib:
+    image: "postgres:12.0-alpine"
+    environment:
+      POSTGRES_USER: "reactive"
+      POSTGRES_PASSWORD: "reactive123"
+      POSTGRES_DB: "reactive"
+    ports:
+      - 5432:5432
+    volumes:
+      - ../../main/resources/db/migration/V1__create_musiclib_tables.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reactive"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
