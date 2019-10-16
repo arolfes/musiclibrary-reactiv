@@ -9,4 +9,7 @@ public interface ReactiveAlbumRepository extends ReactiveCrudRepository<Album, I
 
   @Query("SELECT * FROM albums WHERE name = :name")
   Flux<Album> findByNameContaining(String name);
+
+  @Query("SELECT alb.* FROM albums alb LEFT JOIN artists art ON alb.artist_id = art.id WHERE art.name = :artistName ORDER BY alb.name")
+  Flux<Album> findByArtistNameContaining(String artistName);
 }

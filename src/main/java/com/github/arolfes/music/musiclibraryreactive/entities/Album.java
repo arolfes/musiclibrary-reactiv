@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Album {
 
   @Id
-  private Long id;
+  private Integer id;
   
   @Column
   private String name;
@@ -24,5 +24,5 @@ public class Album {
   private Date releaseDate;
   
   @Column("artist_id")
-  private Long artistId;
+  private Integer artistId;
 }

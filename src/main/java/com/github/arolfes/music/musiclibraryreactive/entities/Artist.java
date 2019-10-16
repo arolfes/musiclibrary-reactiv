@@ -14,8 +14,9 @@ import lombok.NoArgsConstructor;
 public class Artist {
 
   @Id
-  private Long id;
+  private Integer id;
   
   @Column
   private String name;
+
 }

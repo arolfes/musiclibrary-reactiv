@@ -5,38 +5,37 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.github.arolfes.music.musiclibraryreactive.dto.AlbumDto;
-import com.github.arolfes.music.musiclibraryreactive.mapper.AlbumMapper;
-import com.github.arolfes.music.musiclibraryreactive.repository.ReactiveAlbumRepository;
+import com.github.arolfes.music.musiclibraryreactive.dto.ArtistDto;
+import com.github.arolfes.music.musiclibraryreactive.mapper.ArtistMapper;
+import com.github.arolfes.music.musiclibraryreactive.repository.ReactiveArtistRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 
 @RestController
-@RequestMapping("/albums")
+@RequestMapping("/artists")
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlbumController {
+public class ArtistController {
 
   @Autowired
-  private ReactiveAlbumRepository albumRepository;
+  private ReactiveArtistRepository artistRepo;
 
   @Autowired
-  private AlbumMapper albumMapper;
+  private ArtistMapper artistMapper;
 
   @GetMapping()
-  public Flux<AlbumDto> getAllAlbums() {
-    log.debug("get all albums");
-    return albumRepository.findAll().log().map(albumMapper::toAlbumDto).log();
+  public Flux<ArtistDto> getAllArtists() {
+    log.debug("get all artists");
+    return artistRepo.findAll().map(artistMapper::toArtistDto);
   }
 
   @GetMapping("/findByName")
-  public Flux<AlbumDto> getAlbumsByName(@RequestParam String name) {
+  public Flux<ArtistDto> getArtistsByName(@RequestParam String name) {
     log.debug("get all albums by name {}", name);
-    return albumRepository.findByNameContaining(name).log().map(albumMapper::toAlbumDto).log();
+    return artistRepo.findByNameContaining(name).log().map(artistMapper::toArtistDto);
   }
-
 
 }
