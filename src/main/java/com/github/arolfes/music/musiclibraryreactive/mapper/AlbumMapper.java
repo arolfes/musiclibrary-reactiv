@@ -5,11 +5,12 @@ import org.mapstruct.Mapping;
 import com.github.arolfes.music.musiclibraryreactive.dto.AlbumDto;
 import com.github.arolfes.music.musiclibraryreactive.entities.Album;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ArtistMapper.class})
 public interface AlbumMapper {
 
   @Mapping(source = "releaseDate", target = "releaseDate", dateFormat = "yyyy-MM-dd")
-  @Mapping(source = "artistId", target = "artist", ignore = true)
+  @Mapping(source = "artistId", target = "artist.id")
+  @Mapping(source = "artist", target = "artist")
   AlbumDto toAlbumDto(Album album) throws RuntimeException;
 
   @Mapping(source = "releaseDate", target = "releaseDate", dateFormat = "yyyy-MM-dd")

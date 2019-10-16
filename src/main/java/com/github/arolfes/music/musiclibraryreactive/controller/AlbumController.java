@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.github.arolfes.music.musiclibraryreactive.dto.AlbumDto;
 import com.github.arolfes.music.musiclibraryreactive.mapper.AlbumMapper;
+import com.github.arolfes.music.musiclibraryreactive.repository.MyAlbumRepo;
 import com.github.arolfes.music.musiclibraryreactive.repository.ReactiveAlbumRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,9 @@ public class AlbumController {
   private ReactiveAlbumRepository albumRepository;
 
   @Autowired
+  private MyAlbumRepo myAlbumRepo;
+
+  @Autowired
   private AlbumMapper albumMapper;
 
   @GetMapping()
@@ -38,5 +42,10 @@ public class AlbumController {
     return albumRepository.findByNameContaining(name).log().map(albumMapper::toAlbumDto).log();
   }
 
+  @GetMapping("/findByNameWithArtists")
+  public Flux<AlbumDto> getAlbumsByNameWithArtists(@RequestParam String name) {
+    log.debug("get all albums by name {}", name);
+    return myAlbumRepo.getAlbumWithArtist(name).log().map(albumMapper::toAlbumDto).log();
+  }
 
 }

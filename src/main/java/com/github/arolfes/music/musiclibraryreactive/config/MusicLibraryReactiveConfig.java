@@ -7,6 +7,8 @@ import org.springframework.data.r2dbc.core.DefaultReactiveDataAccessStrategy;
 import org.springframework.data.r2dbc.dialect.PostgresDialect;
 import org.springframework.data.r2dbc.repository.support.R2dbcRepositoryFactory;
 import org.springframework.data.relational.core.mapping.RelationalMappingContext;
+import com.github.arolfes.music.musiclibraryreactive.repository.MyAlbumRepo;
+import com.github.arolfes.music.musiclibraryreactive.repository.MyAlbumRepoImpl;
 import com.github.arolfes.music.musiclibraryreactive.repository.ReactiveAlbumRepository;
 import com.github.arolfes.music.musiclibraryreactive.repository.ReactiveArtistRepository;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
@@ -24,6 +26,11 @@ public class MusicLibraryReactiveConfig {
   @Bean
   public ReactiveArtistRepository artistRepository(R2dbcRepositoryFactory factory) {
     return factory.getRepository(ReactiveArtistRepository.class);
+  }
+
+  @Bean
+  public MyAlbumRepo myAlbumRepo() {
+    return new MyAlbumRepoImpl();
   }
 
   @Bean
